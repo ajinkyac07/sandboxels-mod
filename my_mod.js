@@ -1,3 +1,11 @@
+let newBtn = document.createElement("button");
+newBtn.id = "elementButton-e_heater";
+newBtn.className = "elementButton";
+newBtn.setAttribute("element", "e_heater");
+newBtn.innerText = "E-Heater";
+newBtn.style.background = "#ff8c00";
+document.getElementById("category-machines").appendChild(newBtn);
+
 elements.e_heater = {
     color: ["#ff8c00"],
     colorObject: [{r: 255, g: 140, b: 0}], // This manual RGB conversion stops the crash!
