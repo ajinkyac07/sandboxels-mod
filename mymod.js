@@ -1,14 +1,16 @@
 elements.e_heater = {
-    color: "#ff8c00",
-    category: "machines",
+    color: "#ff7f00",
     behavior: behaviors.WALL,
+    category: "machines",
     conduct: 1,
-    temp: 20,
+    insulate: true,
     tempGoal: 200,
-    desc: "Electric heater with adjustable temperature",
+    hardness: 1,
+
+    desc: "Electric heater with adjustable target temperature",
 
     onSelect: function() {
-        var t = prompt("Set heater target temperature (°C):", "200");
+        var t = prompt("Enter target temperature (°C):", elements.e_heater.tempGoal);
         if (t !== null) {
             elements.e_heater.tempGoal = parseFloat(t);
         }
@@ -16,33 +18,30 @@ elements.e_heater = {
 
     tick: function(pixel) {
 
-        if (pixel.charge) {
+        if (!pixel.charge) return;
 
-            var goal = elements.e_heater.tempGoal;
+        var targetTemp = elements.e_heater.tempGoal;
 
-            var dirs = [
-                [0,-1],[0,1],[-1,0],[1,0],
-                [-1,-1],[1,-1],[-1,1],[1,1]
-            ];
+        var dirs = [
+            [0,-1],[0,1],[-1,0],[1,0],
+            [-1,-1],[1,-1],[-1,1],[1,1]
+        ];
 
-            for (var i = 0; i < dirs.length; i++) {
+        for (var i = 0; i < dirs.length; i++) {
 
-                var x = pixel.x + dirs[i][0];
-                var y = pixel.y + dirs[i][1];
+            var x = pixel.x + dirs[i][0];
+            var y = pixel.y + dirs[i][1];
 
-                if (!isEmpty(x,y,true)) {
+            if (!isEmpty(x,y,true)) {
 
-                    var other = pixelMap[x][y];
+                var p = pixelMap[x][y];
 
-                    if (other.temp < goal) {
-                        other.temp += 5;
-                        pixelTempCheck(other);
-                    }
-
+                if (p.temp < targetTemp) {
+                    p.temp += 4;
+                    pixelTempCheck(p);
                 }
+
             }
-
         }
-
     }
 };
