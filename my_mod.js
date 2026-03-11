@@ -1,5 +1,6 @@
 elements.e_heater = {
-    color: "#ff8c00",
+    color: ["#ff8c00"],
+    colorObject: [{r: 255, g: 140, b: 0}], // This manual RGB conversion stops the crash!
     behavior: behaviors.WALL,
     category: "machines",
     state: "solid",
@@ -8,6 +9,7 @@ elements.e_heater = {
     hardness: 1,
     tempGoal: 200,
     desc: "Electric heater. Needs a spark to heat up to 200 degrees.",
+    
     tick: function(pixel) {
         if (!pixel.charge) return;
         
